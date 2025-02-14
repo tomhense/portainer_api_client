@@ -1,11 +1,5 @@
 # Portainer Api Client
 
-# Usage
-
-```plaintext
-
-```
-
 # Config
 
 ```ini
