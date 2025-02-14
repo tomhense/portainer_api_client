@@ -21,7 +21,8 @@ def stacks_action(client, args):
 
     elif args.action == "list":
         for stack in client.get_stacks():
-            print(f"{stack.name}\t{stack.status}")
+            stack_status = PortainerApiClient.StackStatus(stack.status)
+            print(f"{stack.name}\t{stack_status}")
 
 
 def backup_action(client, args):
@@ -58,7 +59,7 @@ def get_config(config_path: str | None = None) -> configparser.ConfigParser:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--config", help="Path to the configuration file", required=False, default=None, dest="config_path"
+        "--config", "-c", help="Path to the configuration file", required=False, default=None, dest="config_path"
     )
     subparsers = parser.add_subparsers(dest="subparser_name", required=True)
 
@@ -69,7 +70,7 @@ def main():
     backup_subparser = subparsers.add_parser("backups")
     backup_subparser.add_argument("action", help="Action to perform", choices=["create"])
     backup_subparser.add_argument("--password", help="Password to encrypt the backup", required=False, default=None)
-    backup_subparser.add_argument("--destination", help="Destination of the backup", required=True)
+    backup_subparser.add_argument("destination", help="Destination of the backup")
     backup_subparser.set_defaults(func=backup_action)
 
     args = parser.parse_args()
