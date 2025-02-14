@@ -47,7 +47,7 @@ def get_config(config_path: str | None = None) -> configparser.ConfigParser:
     else:
         possible_config_paths = [
             Path("/etc/portainer-api-client/config.conf"),
-            get_xdg_config_home() / Path("portainer-api-client.conf"),
+            get_xdg_config_home() / Path("portainer-api-client/portainer-api-client.conf"),
         ]
         config = configparser.ConfigParser()
         for path in possible_config_paths:
