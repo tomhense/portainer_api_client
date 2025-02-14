@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "portainer_api_client"
+license = {text = "GPL-3.0"}
+version = "0.0.3"
+description = "A simple client for the Portainer API"
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = ["requests", "types-requests", "six"]
+authors = [
+    {name = "Tom Hense", email = "example@example.com"}
+]
+
+[project.scripts]
+portainer_api_client = "portainer_api_client.cli:main"
