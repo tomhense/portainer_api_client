@@ -1,4 +1,3 @@
-import os.path
 from enum import Enum
 from pathlib import Path
 
@@ -17,14 +16,12 @@ class PortainerApiClient:
         self.auth_api = swagger_client.AuthApi(self.client)
         self.url = url.rstrip("/") + "/api"
         self.verify_ssl = verify_ssl
-        print(f"URL: {self.url}, Verify SSL: {self.verify_ssl}")
 
     def authenticate_user(
         self,
         username: str,
         password: str,
     ):
-        # The token is only valid for 8 hours, so there is no need to store it
         self.auth_api.api_client.configuration.host = self.url
         self.auth_api.api_client.configuration.verify_ssl = self.verify_ssl
         response = self.auth_api.authenticate_user({"username": username, "password": password})
@@ -42,10 +39,8 @@ class PortainerApiClient:
         self.stacks_api.stack_start(stack.id, stack.endpoint_id)
 
     def backup(self, destination: Path, password: str | None = None):
-        if password is None:
-            backup = self.backup_api.backup()
-        else:
-            backup = self.backup_api.backup(password=password)
+        body = {"password": password} if password else None
+        resp = self.backup_api.backup(_preload_content=False, body=body)
 
         with open(destination, "wb") as f:
-            f.write(backup)
+            f.write(resp.data)

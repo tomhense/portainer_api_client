@@ -21,7 +21,7 @@ def stacks_action(client, args):
 
     elif args.action == "list":
         for stack in client.get_stacks():
-            stack_status = PortainerApiClient.StackStatus(stack.status)
+            stack_status = PortainerApiClient.StackStatus(stack.status).name
             print(f"{stack.name}\t{stack_status}")
 
 
