@@ -46,13 +46,14 @@ def get_config(config_path: str | None = None) -> configparser.ConfigParser:
         return config
     else:
         possible_config_paths = [
-            Path("/etc/portainer-api-client/config.ini"),
-            get_xdg_config_home() / Path("portainer-api-client/config.ini"),
+            Path("/etc/portainer-api-client/config.conf"),
+            get_xdg_config_home() / Path("portainer-api-client.conf"),
         ]
         config = configparser.ConfigParser()
         for path in possible_config_paths:
             if path.exists():
                 config.read(path)
+                return config
         raise FileNotFoundError("Configuration file not found")
 
 
